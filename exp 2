@@ -1,0 +1,202 @@
+mysql> create table db.emp1(empno int(6),ename varchar(10),job char(10),deptno int(3),sal float(7,2));
+Query OK, 0 rows affected, 3 warnings (0.04 sec)
+
+mysql> insert into db.emp1(NULL,'charan','army',NULL,NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'NULL,'charan','army',NULL,NULL)' at line 1
+mysql> insert into db.emp1(null,'charan','army',null,null);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'null,'charan','army',null,null)' at line 1
+mysql> insert into db.emp1 values(null,'charan','army',null,null);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into db.emp1 values(null,'bencho','clerk',null,null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into db.emp1 values(null,'itachi','shopkeeper',null,null);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from db.emp1;
++-------+--------+------------+--------+------+
+| empno | ename  | job        | deptno | sal  |
++-------+--------+------------+--------+------+
+|  NULL | charan | army       |   NULL | NULL |
+|  NULL | bencho | clerk      |   NULL | NULL |
+|  NULL | itachi | shopkeeper |   NULL | NULL |
++-------+--------+------------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> describe db.emp1;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| empno  | int         | YES  |     | NULL    |       |
+| ename  | varchar(10) | YES  |     | NULL    |       |
+| job    | char(10)    | YES  |     | NULL    |       |
+| deptno | int         | YES  |     | NULL    |       |
+| sal    | float(7,2)  | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.03 sec)
+
+mysql> alter table db.emp1 add experience int(100);
+Query OK, 0 rows affected, 1 warning (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> describe db.emp1;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| empno      | int         | YES  |     | NULL    |       |
+| ename      | varchar(10) | YES  |     | NULL    |       |
+| job        | char(10)    | YES  |     | NULL    |       |
+| deptno     | int         | YES  |     | NULL    |       |
+| sal        | float(7,2)  | YES  |     | NULL    |       |
+| experience | int         | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> create table db.dept(deptno int(2),dname varchar(10),loc varchar(10));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> alter table db.dept add primary key(deptno);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe db.dept;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| deptno | int         | NO   | PRI | NULL    |       |
+| dname  | varchar(10) | YES  |     | NULL    |       |
+| loc    | varchar(10) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql>
+mysql> create table db.emp2(ename varchar(10),empno int(3));
+Query OK, 0 rows affected, 1 warning (0.01 sec)
+
+mysql> describe db.emp2;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ename | varchar(10) | YES  |     | NULL    |       |
+| empno | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table db.emp2 add constraint primary key(ename);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe db.emp2;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| ename | varchar(10) | NO   | PRI | NULL    |       |
+| empno | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table db.emp(empno int(5),ename varchar(15),job char(10),deptno int(3));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> alter table db.emp add foreign key(deptno);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table db.emp add foreign key (deptno) references dept(deptno);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe db.emp;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| empno  | int         | YES  |     | NULL    |       |
+| ename  | varchar(15) | YES  |     | NULL    |       |
+| job    | char(10)    | YES  |     | NULL    |       |
+| deptno | int         | YES  | MUL | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> create table db.student(regno int(6),markno int(3));
+ERROR 1050 (42S01): Table 'student' already exists
+mysql> create table db.student1(regno int(6),markno int(3));
+Query OK, 0 rows affected, 2 warnings (0.02 sec)
+
+mysql> alter table db.student1 add contraint(markno >=0 and <=100);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(markno >=0 and <=100)' at line 1
+mysql> alter table db.student1 add contraint(markno);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(markno)' at line 1
+mysql> alter table db.student1 add contraint check(markno >=0);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'check(markno >=0)' at line 1
+mysql> alter table db.student1 add constraint check(markno >=0);
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe db.student1;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| regno  | int  | YES  |     | NULL    |       |
+| markno | int  | YES  |     | NULL    |       |
++--------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table db.student1 add constraint check(regno >4);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe db.student1;
++--------+------+------+-----+---------+-------+
+| Field  | Type | Null | Key | Default | Extra |
++--------+------+------+-----+---------+-------+
+| regno  | int  | YES  |     | NULL    |       |
+| markno | int  | YES  |     | NULL    |       |
++--------+------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> create table db.cust(custno int(6)not null,name char(10));
+Query OK, 0 rows affected, 1 warning (0.05 sec)
+
+mysql> describe db.cust;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| custno | int      | NO   |     | NULL    |       |
+| name   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from db.cust;
+Empty set (0.00 sec)
+
+mysql> describe db.cust;
++--------+----------+------+-----+---------+-------+
+| Field  | Type     | Null | Key | Default | Extra |
++--------+----------+------+-----+---------+-------+
+| custno | int      | NO   |     | NULL    |       |
+| name   | char(10) | YES  |     | NULL    |       |
++--------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> update db.cust set name char='name char not null';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'char='name char not null'' at line 1
+mysql> update db.cust set name char='name char'where name char='not null';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'char='name char'where name char='not null'' at line 1
+mysql> update db.cust set name char='not null';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'char='not null'' at line 1
+mysql> create table db.stud(regno int(6),name char(20));
+Query OK, 0 rows affected, 1 warning (0.02 sec)
+
+mysql> alter table db.stud add constraint primary key(regno);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe db.stud;
++-------+----------+------+-----+---------+-------+
+| Field | Type     | Null | Key | Default | Extra |
++-------+----------+------+-----+---------+-------+
+| regno | int      | NO   | PRI | NULL    |       |
+| name  | char(20) | YES  |     | NULL    |       |
++-------+----------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql>
